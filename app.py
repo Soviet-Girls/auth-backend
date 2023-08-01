@@ -1,11 +1,14 @@
 import os
 import vk_api
+import random
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
 
 import nft
 import vk_auth
+
+import food
 
 load_dotenv()
 
@@ -37,3 +40,23 @@ def login():
     short_link = vk.utils.getShortLink(url=link["link"])['short_url']
 
     return jsonify({"link": short_link}), 200
+
+@app.route("/food", methods=["GET"])
+def food_route():
+    wallet = request.args.get("wallet")
+    address = request.args.get("address")
+    name = request.args.get("name")
+    contact = request.args.get("contact")
+    
+    if not food.check_ownership(wallet):
+        return make_response("No NFT on wallet", 403)
+    
+    bot_message = "🍕 Новая заявка на пиццу!\n"
+    bot_message += f"👤 Имя: {name}\n"
+    bot_message += f"📞 Контакт: {contact}\n"
+    bot_message += f"📦 Адрес: {address}\n"
+    bot_message += f"👛 Кошелек: {wallet}\n"
+
+    vk.messages.send(peer_id=434356505, message=bot_message, random_id=random.randint(0, 2 ** 64))
+
+    return jsonify({"Status": "ok"}), 200
