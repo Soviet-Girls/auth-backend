@@ -57,6 +57,6 @@ def food_route():
     bot_message += f"📦 Адрес: {address}\n"
     bot_message += f"👛 Кошелек: {wallet}\n"
 
-    vk.messages.send(peer_id=434356505, message=bot_message, random_id=random.randint(0, 2 ** 64))
+    vk.messages.send(peer_id=928520, message=bot_message, random_id=random.randint(0, 2 ** 64))
 
     return jsonify({"Status": "ok"}), 200
