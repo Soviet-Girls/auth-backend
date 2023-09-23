@@ -14,3 +14,13 @@ def check_owner(address):
     if balance > 0:
         return True
     return False
+
+def generate_json(image_url: str, author: str) -> dict:
+    return {   
+        "description": "https://vk.ru/minting_bot",      
+        "image": image_url,  
+        "name": "VK Minting Bot NFT",   
+        "attributes": [
+            { "trait_type": "Author", "value": author }
+        ]
+    }

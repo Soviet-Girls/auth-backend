@@ -60,3 +60,9 @@ def food_route():
     vk.messages.send(peer_id=928520, message=bot_message, random_id=random.randint(0, 2 ** 64))
 
     return jsonify({"Status": "ok"}), 200
+
+@app.route("/nft_metadata", methods=["get"])
+def nft_metadata():
+    image_url = request.args.get("image")
+    author = request.args.get("author")
+    return jsonify(nft.generate_json(image_url, author)), 200
